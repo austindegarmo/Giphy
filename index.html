@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Giphy Steez</title>
+</head>
+<body>
+
+<button data-tag="yankees">Yankees</button>
+<button data-tag="cats">dogs</button>
+<button data-tag="LBJ">Lyndon Baines Johnson</button>
+<button data-tag="newtgingrich">Newt Gingrich</button>
+<button data-tag="George w bush">Fool me once, shame on you</button>
+<button data-tag="the undertaker">Undertaker</button>
+
+<button data-tag="jimmy carter">We cannot be both the world's leading champion of peace and the world's leading supplier of the weapons of war.</button>
+ 
+<form>
+
+	<input id="input-field" type="text">Your input </label>
+
+</form>
+
+
+
+ <div id="gifs-appear-here"></div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+  <script type="text/javascript">
+
+
+var inputField = $("button").on("click", function(){
+
+	console.log("input-field")
+})
+
+  $("button").on("click" , function() {
+
+
+var topics = $(this).attr("data-tag");
+var queryURL = "http://api.giphy.com/v1/gifs/search?q=" + topics + "&api_key=dc6zaTOxFJmzC&limit=10";
+
+
+  
+
+$.ajax({
+        url: queryURL,
+        method: "GET"
+      })
+
+	.done(function(response) {
+
+		console.log(queryURL);
+
+		var results = response.data;
+
+
+		for (var i = 0; i < results.length; i++) {
+
+			var spittingDiv = $("<div>");
+
+			var p = $("<p>").text("rating" + results[i].rating);
+			
+			var gifSpot = $("<img>");
+
+			gifSpot.attr("src" , results[i].images.fixed_height.url);//remember to add a motherfucking link right here)
+
+			spittingDiv.append(p);
+			spittingDiv.append(gifSpot);
+
+				$("#gifs-appear-here").prepend(gifSpot);
+			}
+		});
+	});
+
+  </script>
+
+</body>
+</html>
